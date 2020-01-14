@@ -1,9 +1,6 @@
 package test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 
 /*
 程序随机生成100个0-99之间的随机整数存入数组，
@@ -11,12 +8,12 @@ import java.io.FileOutputStream;
  */
 public class testDay01 {
     public static void main(String[] args) {
-        FileOutputStream fos=null;
+        OutputStream fos=null;
         //1.动态初始化数组
         String [] arr=new String[100];
         try {
         //2.创建字符输出流，将输入写进文件
-            fos= new FileOutputStream(new File("D:\\100个随机数.txt"));
+            fos= new FileOutputStream(new File("D:\\test\\100个随机数.txt"));
         //3.用for循环创建随机数，并添加到数组
         for (int i=0;i<100;i++){
             arr[i]="  "+(int)(Math.random()*100);
