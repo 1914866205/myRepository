@@ -1,0 +1,71 @@
+*{
+    box-sizing:border-box;
+  }
+
+header{
+          padding:50px;
+          border-color:#FFF;
+          border-style:solid;
+          border-width:2px;
+          text-align:center;
+          background:#6CF;
+   }
+
+nav{
+           padding:8px;
+           border-color:#FFF;
+           border-style:solid;
+           border-width:2px;
+           text-align:center;
+           background:#6CF;
+    }
+
+article{
+           padding:10px;
+           border-color:#FFF;
+           border-style:solid;
+           border-width:2px;
+           text-align:center;
+           width:75%;
+           float:right;
+           background:#F9C;
+    }
+
+article h1{
+           padding:10px;
+           border-color:#FFF;
+          border-style:solid;
+          border-width:2px;
+           text-align:center;
+           background:#6CF;
+    }
+
+article section{
+           padding:90px;
+           border-color:#FFF;
+           border-style:solid;
+           border-width:2px;
+           text-align:center;
+           background:#6CF;
+    }
+
+aside{
+           padding:147.5px;
+           border-color:#FFF;
+           border-style:solid;
+           border-width:2px;
+           text-align:center;
+           width:25%;
+           float:left;
+           background:#6CF;
+}
+
+footer{
+           padding:10px;
+           border-color:#FFF;
+           border-style:solid;
+           border-width:2px;
+           text-align:center;
+           clear:both;
+           background:#3CF;
+    }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location对象</title>
+</head>
+<body>
+<input id="btn" type="button"value="刷新">
+<input id="goitcast" type="button"value="去传智">
+  <script>
+  //1.获取按钮
+  var btn=document.getElementById("btn");
+  btn.onclick=function(){
+      //刷新页面
+      location.reload();
+  }
+  //获取href
+    var href=location.href;
+  //alert(href);
+  //点击按钮，去访问www.itcast.cn官网
+  //1.获取按钮
+  var btn1=document.getElementById("goitcast");
+  btn1.onclick=function(){
+      //去访问www.itcast.cn官网
+
+      location.href="http://www.itcast.cn";
+  }
+  </script>
+</body>
+</html>

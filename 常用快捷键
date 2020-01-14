@@ -1,0 +1,19 @@
+ 行注释:   Ctrl+/    再次 取消注释
+ 块注释:  Ctrl+Shift+/   再次 取消注释
+Ctrl+Shift+上下键   上下移动代码
+ 方法或类注释  在方法或类开头 ，输入/**,回车,自动根据参数和返回值生成注释模板
+ 1.Ctrl+D 复制行
+ 2.Ctrl+X 删除行
+ 3.Ctrl+R 替换文本
+ 4.Ctrl+F 查找文本
+ 5.Ctrl+E 最近打开的文件
+ 6.Ctrl+J 自动代码
+ 7.Ctrl+N 查找类
+ 8.Ctrl+Alt+L 格式化代码
+ 9.Ctrl+U  大小写切换 
+ 10.Ctrl +B 找来源
+
+   11. psvm 自动补全main方法
+
+   12. sout 自动补全 System.out.println
+

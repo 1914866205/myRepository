@@ -1,0 +1,77 @@
+仓库分三类：本地仓库，远程仓库（私服），中央仓库
+
+maven项目目录结构
+    src/main/java目录 核心代码部分
+    src/main/resources 配置文件部分
+    src/test/java目录 测试代码部分
+    src/test/resources 测试配置文件
+    src/main/webapp 页面资源，js,jsp,css,图片等资源
+
+maven命令
+    mvn clean  删除target (删除本地编译的所有信息)
+    mvn compile 添加target (本地编译java)
+    mvn test 把测试下的代码编译
+    mvn package 打包
+    mvn install 添加target (本地编译java)，打包，把包安装到本地仓库
+
+maven生命周期
+a:
+    清理生命周期
+    mvn clean  清除项目编译信息
+b:
+    默认生命周期（当走到后一步，之前的所有步骤都已经走过了）
+A:一键构建
+    每一个构建项目的命令都对应了maven底层的一个插件
+    1.编译  compile
+    2.测试  test
+    3.打包  package
+    4.安装  install
+    5.发布   deploy
+c:
+    站点生命周期
+
+B:依赖管理
+    pom.xml的三类信息
+        1.项目自身的信息
+        2.dependencies 运行所依赖的jar包信息 ----> 依赖管理模型(Dependency)
+            <dependency>
+                <groupId>公司组织的名称</groupId>
+                <artifactId>项目名</artifactId>
+                <version>版本号</version>
+            </dependency>
+        3.plugins 运行环境信息，比如jdk,tomcat信息  ----> 项目对象模型(POM)
+
+    maven两大核心功能：依赖管理，一键构建
+
+    maven---quickstart  maven创建java工程
+    maven---webapp  maven创建web工程
+
+
+    解决JA包冲突，设置作用域
+    <scope>provided</scope>让这个jar包仅在写代码时起作用，真正项目运行时不起作用
+    <scope>test</scope>让这个jar包仅在测试时起作用
+
+
+要想从数据库中取出数据
+必须有四个属性：
+    1.数据库驱动
+    2.连接数据库的地址
+    3.数据库用户名称
+    4.数据库密码
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

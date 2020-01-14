@@ -1,0 +1,461 @@
+
+#JQuery基础
+  1.概念：一个JavaScript框架。简化JS框架
+    JavaScript框架：本质上就是一些js文件，封装了js的原生代码而已
+
+  2.快速入门
+    1.步骤
+      1.下载JQuery
+      2.导入JQuery的js文件
+        导入min.js文件
+      3.使用
+          //用JQuery框架
+          var  div1=$("#div1");
+          alert(div1.html());
+  3.JQuery对象和JS对象区别与转换
+          /*
+          *     1.JQuery对象在操作是，更加方便
+          *     2.JQuery对象和js对象方法不通用的
+          *     3.两者相互转换
+          *       * jq-->js: jq对象[索引] 或者 jq对象.get(索引)
+          *       * js-->jq:  $(js对象)
+          *
+  4.选择器标签：筛选具有相似特征的元素（标签）
+    1.基本语法学习
+      1.事件绑定
+                //1.获取b1按钮
+                $("#b1").click(function () {
+                    alert("abc");
+                });
+      2.入口函数
+          $(function () {
+
+          });
+      3.样式控制
+          1.    $(function () {
+                 // $("#div1").css("background-color","red");
+                  $("$div1").css("backgroundColor","pink");
+              });
+          2. 分类
+            1.基本选择器：
+              1.标签选择器（元素选择器）
+                *语法： $("html标签名")  获得所有匹配标签名称的元素
+              2.id选择器
+                *语法： $("#id的属性值") 获得指定id的元素
+              3.类选择器
+                *语法： $(".class的属性值") 获得指定class的元素
+              4.并集选择器
+                *语法： $("选择器1,选择器2...") 获得多个选择器的元素
+            2.层级选择器
+              1.后代选择器
+                *语法： $("A B") 选择A元素内部的B元素
+              2.子选择器
+                *语法： $("A>B") 选择A选择器内部的所有直接子元素B
+            3.属性选择器
+              1.属性名称选择器
+                *语法： $("A[属性名]") 包含指定属性的选择器
+              2.属性选择器
+                *语法： $("A[属性名='值']") 包含指定属性等于指定值的选择器
+              3.复合属性选择器
+                  *语法： $("A[属性名='值'][]...")包含多个属性条件的选择器
+                    属性title值等于test的div元素
+                          $("div[title='test']").css("backgroundColor","pink");
+                    属性title值不等于test的div元素
+                          $("div[title!='test']").css("backgroundColor","pink");
+                    属性title值以te开头的div元素
+                          $("div[title^='te']").css("backgroundColor","pink");
+                    属性title值以st结尾的div元素
+                          $("div[title$='st']").css("backgroundColor","pink");
+                    属性title值包含es的div元素
+                          $("div[title*='es']").css("backgroundColor","pink");
+                    属性title值有id且包含es的div元素
+                          $("div[id][title*='es']").css("backgroundColor","pink");
+              4.过滤选择器
+                1.首元素选择器
+                    *语法：first 获得选择的元素中的第一个元素
+                        改变第一个div元素的背景色
+                        $("div:first").css("backgroundColor","pink");
+                2.尾元素选择器
+                    *语法：last 获得选择的元素中的最后一个元素
+                        改变第一个div元素的背景色
+                        $("div:last").css("backgroundColor","pink");
+                3.非元素选择器
+                    *语法：not(selector) 不包括指定内容的元素
+                        改变class不为one的所有div元素的背景色  .是类选择器
+                        $("div:not(.one)").css("backgroundColor","pink");
+                4.偶数选择器
+                    *语法：even 偶数,从0开始计数
+                       $("div:even").css("backgroundColor","pink");
+                5.奇数选择器
+                    *语法：odd 奇数,从0开始计数
+                       $("div:odd").css("backgroundColor","pink");
+                6.等于索引选择器
+                    *语法：  :eq(index) 指定索引元素
+                       $("div:eq(3)").css("backgroundColor","pink");
+                7.大于索引选择器
+                    *语法：  :gt(index) 大于指定索引元素
+                       $("div:gt(3)").css("backgroundColor","pink");
+                8.小于索引选择器
+                    *语法：  :lt(index) 小于指定索引元素
+                       $("div:lt(3)").css("backgroundColor","pink");
+                9.标题选择器
+                    *语法：  :header 获得标题(h1-h6)元素，固定写法
+                       $(":header").css("backgroundColor","pink");
+              5.表单过滤选择器
+                1.可用元素选择器
+                      *语法： :enabled 获得可用元素
+                      利用JQuery对象的val()方法改变表单内可用<input>元素的值
+                      $("input[type='text']:enable").val("aaa");
+                2.不可用元素选择器
+                      *语法： :disabled 获得不可用元素
+                       利用JQuery对象的val()方法改变表单内不可用<input>元素的值
+                      $("input[type='text']:disable").val("aaa");
+                3.选中选择器
+                      *语法： :checked 获得单选/复选框选中的元素
+                      $("input[type='checked']:checked").length)
+
+                4.选中选择器
+                      *语法： :selected 获得下拉框选中的元素
+                      $("#下拉列表的id > option:selected").length
+    入口函数
+      $(function(){
+
+      })
+
+     给ID=b1的元素添加单击事件
+      $("#b1").click(function(){
+        //获取所有文本输入框,并把值改为aaa
+        $("input[type='text']").val("aaa")
+  //获取所有可用文本输入框
+        $("input[type='text']：enabled")
+      });
+
+5.DOM操作
+  1.内容操作
+    1.html():获取/设置元素的标签体内容
+        <a><font>内容</font></a>   -->   <font>内容</font>
+    获取：      var  html=$("#id").html();
+    设置：     $("#id").html("<a>新html表签</a>");
+    2.text():获取/设置元素的表签体纯文本内容
+      <a><font>内容</font></a>   -->   内容
+          获取：      var  text=$("#id").text();
+          设置：     $("#id").text("新内容，无标签样式了");
+    3.val():获取/设置元素的value属性值
+获取：      var  value=$("#id").val();
+设置：     $("#id").val("新值");
+
+  2.属性操作
+    1.通用属性操作
+      1.attr():获取/设置元素的属性
+    获取    var name=$("#id").attr("name")
+    设置    $("#id").attr("name","张三")
+    添加    $("#id").attr("discription","名字")
+      2.removeAttr()：删除属性
+    删除   $("#id").removeAttr("name")
+      3.prop()：获取/设置元素的属性
+      var checked=$("#hoppy").prop("checked") //获取复选框的选中状态
+      4.removeProp()：删除 属性
+
+      *attr和prop的区别
+        1.如果操作的是元素的固有属性，则用prop，如checked,selected,
+        2.如果操作的是软塑自定义的属于，则用attr
+    2.对class属性操作
+      1.addClass():添加class属性值
+        $("#one").addClass("second")
+      2.removeClass()：删除class属性值
+        $("#one").removeClass("second")
+      3.toggleClass():切换class属性
+          * toggleClass("one"):判断如果元素对象上存在class="one",则将属性值one删除掉。
+            如果元素对象上不存在class="one",则添加
+        $("#one").toggleClass("second")
+      4.css()
+          $("$div1").css("backgroundColor","pink");
+
+    3.CRUD操作：
+      1.append():父元素将子元素追加到末尾
+        * 对象1.append(对象2):将对象2添加到对象1元素内部，并且在末尾
+
+     效果相同
+      $("#city").append($("#fk"));
+      $("#fk").appendTo($("#city"));
+
+      2.prepend():父元素将子元素追加到开头
+        * 对象1.prepend(对象2)：将对象2添加到对象1元素内部，并且在开头
+
+   效果相同
+      $("#city").prepend($("#fk"));
+      $("#fk").prependTo($("#city"));
+
+      3.appendTo():将对象1添加到对象2内部，并且在末尾
+        * 对象1.appendTo(对象2):将对象1添加到对象2内部，并且在末尾
+
+      4.prependTo():将对象1添加到对象2的内部并且在开头
+        * 对象1.prependTo(对象2)：将对象1添加到对象2内部，并且在开头
+
+      5.after():添加元素到元素后面
+        * 对象1.after(对象2)：将对象2添加到对象1后面。对象1和对象2是兄弟关系
+
+      效果相同
+        $("#tj").after($("#fk"))
+        $("#fk").insertAfter($("#tj"))
+
+      6.before():添加元素到元素前面
+        * 对象1.before(对象2):将对象2添加到对象1前面。对象1和对象2是兄弟关系
+
+           效果相同
+             $("#tj").before($("#fk"))
+             $("#fk").insertBefore($("#tj"))
+
+
+      7.insertAfter()
+        * 对象1.insertAfter(对象2):将对象2添加到对象1后面。对象1和对象2是兄弟关系
+      8.insertBefore()
+        * 对象1.insertBefore(对象2):将对象2添加到对象1前面。对象1和对象2是兄弟关系
+      9.remove():移除元素
+        * 对象.remove():将对象删除掉
+            // 删除id=bj的元素
+        $("#bj").remove();
+      10.empty():清空元素的所有后代元素
+        * 对象.empty():将对象的后代元素全部清空，但是保留当前对象以及其属下节点
+            //删除city的所有li节点，清空元素中的所有后代节点,但是保留当前节点
+        $("#city").empty();
+
+从第一行开始，奇数行背景色改为pink，偶数行改为yellow
+$("tr:gt(1):odd").css("backgroundColor","pink")
+$("tr:gt(1):even").css("backgroundColor","yellow")
+
+
+function selectAll(obj){
+  //获取下边的复选框,触发事件选中所有
+  $(".itemSelect").prop("checked",obj.checked)
+}
+
+需求，点击QQ标签，将其追加到发言框
+  $(function(){
+    //1.将img图片添加onclick事件
+    $("ul img").click(function(){
+        //后代选择器，选择ul下的img标签
+        //2.追加到p标签中即可(复制的而不是剪切的)
+       //剪切   $(".word").append(this)
+       //js对象不可以直接调用JQuery方法
+       $(".word").append(this.clone())  是错误的
+       应该先转换为JQuery对象
+       $(".word").append($(this).clone())
+
+    })
+  })
+
+获取右边的下拉列表对象，append左边下拉列表选中的option
+$("#rightName").append($("#leftName > option:selected"))
+
+获取右边的option,将其移动到左边下拉列表中
+$("#rightName > option:selected").appendTo($("#leftName"))
+
+
+##JQuery 高级
+  1.三种方式显示和隐藏元素
+     *参数
+        1.speed：动画的速度，三个预定的值("slow","normal","fast")表示动画时长的毫秒值
+        2.easing:用来指定切换效果，默认是"swing",可用参数"linear"
+          * swing: 动画执行效果是：先慢，后快，最后慢
+          * linear:动画执行效果是:匀速
+        3.fn :触发事件
+
+        $("#showDiv").toggle("slow" )
+
+        动画效果
+
+              1.默认显示和隐藏方式
+                1.show([speed,[easing],[fn]])显示
+                2.hide([speed,[easing],[fn]])隐藏
+                3.toggle([speed,[easing],[fn]])判断后操作即切换
+              2.滑动显示和隐藏方式
+                1.slideDown([speed,[easing],[fn]])
+                2.slideUp([speed,[easing],[fn]])
+                3.slideToggle([speed,[easing],[fn]])
+              3.淡入淡出显示和隐藏方式
+                1.fadeIn([speed,[easing],[fn]])
+                2.fadeOut([speed,[easing],[fn]])
+                3.fadeToggle([speed,[easing],[fn]])
+
+
+  2.遍历
+    1. js的遍历方式
+      * for(初始化值;循环介绍条件;步长)
+
+            //1.获取所有ul下的li,city可以当做数组使用
+            var citys=$("#city li")
+            //2.遍历
+             for (var i=0;i<citys.length;i++){
+             //获取内容
+             alert(i+":"+citys[i].innerHTML)
+             }
+             });
+
+    2. jq的遍历方式
+        1. jq对象.each(callback)
+              var citys=$("#city li")
+                      //2.遍历
+                       for (var i=0;i<citys.length;i++){
+                       //获取内容
+                       citys.each(function(){
+                       alert(this.innerHTML);
+                       })
+                       }
+                       });
+        2. $.each(object,[callback])
+
+                            var citys=$("#city li")
+                                    //2.遍历
+                                     for (var i=0;i<citys.length;i++){
+                                     //获取内容
+                                     citys.each(function(index,element){
+
+                                    //一下两者效果相同
+                               1      alert(index+":"element.innerHTML);
+                               2      alert(index+":"+$(element).html());
+                                        return true; 效果是continue
+                                        return false; 效果是break
+
+                                     })
+                                     }
+                                     });
+
+                               3      $.each(citys.function(){
+                                     alert($(this).html());
+                                     });
+        3. for..of    JQuery3.0之后的版本
+          for(li of citys){
+            alert($(li).html());
+          }
+
+     3.事件绑定
+      1.jquery标准的绑定方式
+        jq对象.事件方法(回调函数)；
+            $(function()){
+                1.获取name对象，绑定click事件
+                $("#name").click(function()){
+                  alert("我被点击了")
+                }
+            }
+               $(function()){
+                            1.获取name对象，绑定鼠标移除事件
+                            $("#name").mouseover(function()){
+                              alert("鼠标来了")
+                            }
+                             2.获取name对象，绑定鼠标移除事件
+                              $("#name").mouseout(function()){
+                                  alert("鼠标走 了")
+                              }
+
+                             简化书写
+                               $("#name").mouseover(function()){
+                                   alert("鼠标来了")
+                               }.mouseout(function()){
+                                   alert("鼠标走 了")
+                                  }
+
+                               让文本输入框获得焦点
+                               $("#name").focus();
+                               表单提交
+                               表单对象.submit();
+
+                        }
+
+      2.on绑定事件/off解除绑定
+        jq对象.on("事件名称",回调函数)
+        jq对象.off("事件名称")
+
+        $(function(){
+          使用on给按钮绑定单击事件 click
+          $("#btn").on("click",function(){
+            alert("我被点击了")
+          })
+          使用off给按钮解除单击事件
+          $("#btn2").click(function(){
+            //解除btn按钮的click事件
+            $("#btn").off("click");
+            //解除btn上的所有事件
+            $("#btn").off();
+          })
+        })
+      3.事件切换：toggle
+      *****toggle在jquery 1.9 之后就被移除了，如果想要使用必须引入migrate插件
+        jq对象.toggle(fn1,fn2...)
+           * 当单击jq对象对应的组件后，会执行fn1,第二次点击会执行fn2...
+           * 如果只有两个方法，则第三次点击又会执行fn1
+        $(function(){
+          获取按钮，调用toggle方法
+          $("#btn").toggle(function(){
+            改变div背景色backgroundColor 颜色为 green
+            $("#myDiv").css("backgroundColor","green");
+          },function(){
+            改变div背景色backgroundColor 颜色为 pink
+            $("#myDiv").css("backgroundColor","pink");
+          }
+          })
+        }
+
+广告显示
+$(function(){
+  //定义定时器，调用adShow方法，3秒后执行一次
+  setTimeout(adShow,3000);
+  //定义定时器，调用adHide方法，8秒后执行一次
+  setTimeout(adHide,3000);
+})
+
+//显示广告
+function adShow(){
+  //获取广告div,调用显示方法
+  $("#ad").show("slow");
+}
+//隐藏广告
+function adHide(){
+  //获取广告div,调用隐藏方法
+  $("#ad").hide("slow");
+}
+
+//1.定义jqueru的对象
+$.fn.extend({
+  //定义了一个check()方法。所有的jq对象都可以调用该方法
+    check:function(){
+      //让复选框选中
+
+      //this:调用该方法的jq对象
+      this.prop("checked",true);
+    }
+
+    uncheck:function(){
+      //让复选框不选中
+
+      this.prop("checked",false);
+    }
+});
+
+5.插件：增强JQuery的功能
+  1.实现方式：
+    1. $.fn.extend(object)
+      *增强通过jquery获取的对象的功能
+          $("#id")
+    2. $.extend(object)
+      *增强JQuery对象的功能
+          $/JQuery
+
+
+$(function(){
+  //获取按钮
+  //$("#btn-check").check();
+  //复选框对象.check();
+
+  $("#btn-check").click(function(){
+    //获取复选框对象
+    $("input[type='checkbox']").check();
+  });
+
+    $("#btn-uncheck").click(function(){
+      //获取复选框对象
+      $("input[type='checkbox']").uncheck();
+    });
+});
+
+

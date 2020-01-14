@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/itcast.js"></script>
+<body>
+<div id="div1">div1...</div>
+<div id="div2">div2...</div>
+<script>
+    //1.根据id获取元素对象
+    //不用框架
+    // var div1=document.getElementById("div1");
+    // var div2=document.getElementById("div2");
+
+    //用自定义框架
+    // var div1=get("div1");
+    // var div2=get("div2");
+
+    //用JQuery框架
+    var  div1=$("#div1");
+    alert(div1.html());
+    var div2=$("#div2");
+    alert(div2.html());
+</body>
+</html>

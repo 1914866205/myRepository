@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>逻辑运算符</title>
+</head>
+<script>
+  /*
+  * 逻辑运算符
+  *   &&  与  短路
+  *   ||   或  短路
+  *    ！  非   短路
+  *       其他类型转boolean
+  *           1.number   0或NaN为假  非0位真
+  *           2.string    除了空字符串"" 其他都是true
+  *           3.null&undefined  都是false
+  *           4.对象  所有对象都为true
+  * */
+  var flag=true;
+  document.write(flag+"<br>");
+  document.write(!flag+"<br>");
+  document.write("<hr>")
+
+  var num=3;
+  var num2=0;
+  var num3=NaN;
+  // while (1){
+  //     //死循环
+  // }
+  document.write(!!num+"<br>");
+  document.write(!!num2+"<br>");
+  document.write(!!num3+"<br>");
+  document.write("<hr>")
+//string
+  var str1="";
+  var str2="a";
+  document.write(!!str1+"<br>");
+  document.write(!!str2+"<br>");
+  document.write("<hr>");
+ //null和undefined
+  var obj=null;
+  var obj2;
+  var date=new Date();
+  document.write(!!obj+"<br>");
+  document.write(!!obj2+"<br>");
+  document.write(!!date+"<br>");
+  document.write("<hr>");
+  //防止空指针异常
+  obj="123";//JS中可以这样使用来简化书写
+  if (obj!=null&&date.length>0){
+    alert(123);
+  }
+  //防止空指针异常
+  if (date){
+    alert(111);
+  }
+
+  //三元运算符
+  var u=1;
+  var o=2;
+  var m=u>o?u:o;
+  alert(m);
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片切换</title>
+</head>
+<body>
+<img id="light" src="b1.jpg">
+<script>
+  /*
+  * 分析.
+  *     1.获取图片对象
+  *     2.绑定单击事件
+  *     3.每次点击切换图片
+  *           * 规则，如果是颜色图片，则切换人像
+  *                   如果是人像，则切换为颜色图片
+  *           使用标记flag来完成
+  *
+  *
+  *  */
+
+  //1.获取图片对象
+  var light=document.getElementById("light");
+  var flag=false;//代表颜色图片
+  //2.绑定单击事件
+  light.onclick=function(){
+      if(flag){
+          //如果是人像，则换为颜色图片
+          light.src="ym.jpg";
+          flag=false;
+      }else{
+          //如果是颜色图片，则换为人像
+      light.src="b1.jpg";
+      flag=true;
+      }
+  }
+</script>
+</body>
+</html>

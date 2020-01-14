@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表格</title>
+  <style>
+    table{
+      border: 1px solid;
+      margin: auto;
+      width: 500px;
+    }
+    td,th{
+      text-align: center;
+      border: 1px solid;
+    }
+    div{
+      text-align: center;
+      margin: 50px;
+    }
+    .out{
+      background-color: whitesmoke;
+    }
+    .over{
+      background-color: pink;
+    }
+  </style>
+  <script>
+    /*
+    * 分析
+    *       1.全选
+    *             获取所有的checkbox
+    *             遍历cb，设置每一个cb的状态为选中   checked
+    *
+    * */
+    //1.在页面加载完后绑定事件
+    window.onload=function () {
+        //2.给全选按钮绑定单击事件
+        document.getElementById("selectAll").onclick=function () {
+            //全选
+            //1.获取所有的checkbox
+            var cbs=document.getElementsByName("cb");
+            //遍历
+            for (var i = 0; i <cbs.length ; i++) {
+                //3.设置每一个cb的状态为选中，checked
+                cbs[i].checked=true;
+            }
+        };
+
+        //3.给全选按钮绑定单击事件
+        document.getElementById("unSelectAll").onclick=function () {
+            //全不选
+            //1.获取所有的checkbox
+            var cbs=document.getElementsByName("cb");
+            //遍历
+            for (var i = 0; i <cbs.length ; i++) {
+                //3.设置每一个cb的状态为未选中，checked
+                cbs[i].checked=false;
+            }
+        };
+
+        //4.给全选按钮绑定单击事件
+        document.getElementById("selectRev").onclick=function () {
+            //反选
+            //1.获取所有的checkbox
+            var cbs=document.getElementsByName("cb");
+            //遍历
+            for (var i = 0; i <cbs.length ; i++) {
+                //3.设置每一个cb的状态为未选中，checked
+                cbs[i].checked=!cbs[i].checked;
+            }
+        };
+
+
+        document.getElementById("firstCb").onclick=function () {
+            //点击第一个cb
+            //1.获取所有的checkbox
+            var cbs=document.getElementsByName("cb");
+           //获取第一个cb
+
+            //遍历
+            for (var i = 0; i <cbs.length ; i++) {
+                //3.设置每一个cb的状态和第一个cb的状态相同
+                cbs[i].checked=this.checked;
+            }
+        };
+      //给所有tr绑定鼠标移到元素之上和移除元素之上
+        var trs=document.getElementsByTagName("tr");
+        //2.遍历
+        for (var i = 0; i <trs.length ; i++) {
+            //移到元素之上
+            trs[i].onmouseover=function () {
+                  this.className="over";
+            };
+            //移除元素
+            trs[i].onmouseout=function () {
+                  this.className="out";
+            }
+        }
+    }
+  </script>
+</head>
+<body>
+
+<div>
+  <input type="text" id="id"placeholder="请输入编号">
+  <input type="text" id="name"placeholder="请输入姓名">
+  <input type="text" id="gender"placeholder="请输入性别">
+  <input type="button" id="btn_add" value="添加">
+</div>
+<table>
+  <caption>学生信息表</caption>
+  <tr>
+    <th><input type="checkbox"name="cb"id="firstCb"> </th>
+    <th>编号</th>
+    <th>姓名</th>
+    <th>性别</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+    <th><input type="checkbox"name="cb"> </th>
+    <td>1</td>
+    <td>令狐冲</td>
+    <td>男</td>
+    <!--this代表当前超链接的对象-->
+    <td><a href="javascript:void(0);"onclick="delTr(this);">删除</a></td>
+  </tr>
+  <tr>
+    <th><input type="checkbox"name="cb"> </th>
+    <td>2</td>
+    <td>任我行</td>
+    <td>男</td>
+    <td><a href="javascript:void(0);"onclick="delTr(this);">删除</a></td>
+  </tr>
+  <tr>
+    <th><input type="checkbox"name="cb"> </th>
+    <td>3</td>
+    <td>岳不群</td>
+    <td>？</td>
+    <td><a href="javascript:void(0);"onclick="delTr(this);">删除</a></td>
+  </tr>
+
+</table>
+<div>
+  <input type="button"id="selectAll"value="全选">
+  <input type="button" id="unSelectAll"value="全不选">
+  <input type="button" id="selectRev"value="反选">
+</div>
+</body>
+</html>

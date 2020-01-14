@@ -1,0 +1,884 @@
+1.web相关概念的回顾
+2.web服务器软件：tomcat
+3.Servlet入门学习
+
+##web相关概念回顾
+       1.软件架构
+            1.C/S  客户端/服务器端
+            2.B/S  浏览器/服务器端
+       2.资源分类
+            1.静态资源  所有用户访问后看到的结果是一样的，称为静态资源
+                        静态资源可以直接被浏览器解析，因为浏览器有静态资源解析器
+                   * 如：html,css,javaScript
+            2.动态资源  每个用户访问相同的资源后，得到的结果可能不一样，称为动态资源
+                        动态资源被访问后需要先转换为静态资源，再被浏览器解析，因为浏览器只有静态资源解析器
+                   * 如：servlet/jsp,php,asp...
+       3.网络通信三要素
+            1.IP：电子设备（计算机）在网络中的唯一标识
+            2.端口：应用程序在计算机中的唯一标识  0-65536  1024以内的端口大多被操作系统占用，不建议自己用
+            3.传输协议：规定了数据传输的规则
+                   1.基础协议：
+                           1.TCP：安全协议，三次握手，速度稍慢
+                           2.UDP：不安全协议，速度快
+
+##web服务器软件
+    *服务器：安装了服务器软件的计算机
+    *服务器软件：接收用户的请求。处理请求，做出响应
+    *web服务器软件：接收用户的请求。处理请求，做出响应
+            *在web服务器软件中，可以部署web项目，让用户通过浏览器来访问这些资源
+            *也被称为web容器，即动态资源必须在容器里面运行
+    *常见的java相关的web服务器软件：
+                     *JavaEE:  Java语言在企业级开发中使用的技术规范的总和，一个规定了13项大的规范
+        *webLogic: oracle公司，大型的javaEE服务器，支持所有的javaEE规范，收费的
+        *webSphere: IBM公司,大型的javaEE服务器，支持所有的javaEE规范，收费的
+        *JBOSS: JBOSS公司的，大型的javaEE服务器，支持所有的javaEE规范，收费的
+        *Tomcat: Apache基金组织，中小型的javaEE服务器，仅仅支持少量的javaEE规范servlet/jsp，开源的，免费的
+
+目录结构
+        bin 可执行文件
+        conf 配置文件
+        lib 依赖jar包
+        logs 日志文件
+        temp 临时文件
+        webapps 存放web项目
+        work  存放运行时的数据
+
+        启动Tomcat
+                Windows系统  bin——>startup.bar
+                Linux系统    bin——>startup.sh
+
+        localhost映射了127.0.0.1
+ 访问自己       http://localhost:8080   等于  http://127.0.0.1:8080
+ 访问别人       http://别人的IP地址:8080
+
+    一般会将Tomcat的默认端口号修改为80.
+    80为http协议的默认端口号
+    好处：在访问时，就不用输入端口号
+
+*静态项目和动态项目
+        *目录结构
+            *java动态项目的目录结构：
+                   --项目的根目录
+                    --WEB-INF目录
+                        --web.xml:web项目的核心配置文件
+                        --classed目录：放置字节码文件的目录
+                        --lib目录：放置依赖的jar包
+
+*将Tomcat集成到IDEA中，并且创建javaEE的项目，部署项目
+
+## Servlet: server applet
+        概念：运行在客户端的小程序
+            *Servlet就是一个接口（规则），定义了Java类被浏览器访问到（tomcat识别）的规则
+            *将来我们自定义一个类，实现Servlet接口，复写方法
+        *快速入门：
+            1.创建一个javaEE项目
+            2.定义一个类，实现Servlet接口
+                    public class ServletDemo1 implements Servlet
+            3.实现接口中的抽象方法
+            4.配置Servlet
+                    在web.xml中配置
+                                <!--配置Servlet-->
+                                <servlet>
+                                    <servlet-name>demo1</servlet-name>
+                                    <servlet-class>cn.itcast.web.servlet.ServletDemo1</servlet-class>
+                                </servlet>
+                                <servlet-mapping>
+                                    <servlet-name>demo1</servlet-name>
+                                    <url-pattern>/demo1</url-pattern>
+                                </servlet-mapping>
+    *执行原理：
+        1.当服务器接收到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径
+        2.查找web.xml文件，是否有对应的<url-pattern>标签体内容
+        3.如果有，则在对应的<servlet-class>全类名
+        4.tomcat会将字节码文件加载进内存，并创建其对象（反射机制  看到全类名就要想到反射）
+        5.调用其方法
+    *Servlet的生命周期
+            1.被创建：执行Init方法，只执行一次，用于加载资源
+                    *Servlet什么时候被创建？
+                        *默认情况下，第一次被访问时，Servlet被创建
+                        *可以配置执行Servlet的创建时间
+                    *在web.xml的servlet标签下配置
+                             <!--指定Servlet的创建时机
+                                        1.第一次被访问时创建
+                                            *<load-on-startup>值为负数时，是第一次访问时被创建,默认值为-1
+                                        2.在服务器启动时创建                *<load-on-startup>值为负数时，是第一次访问时被创建,默认值为-1
+                                            *<load-on-startup>值为负数时，是在服务器启动时创建,默认值为0或正整数
+
+                                    -->
+                   Servlet的init方法只执行一次，说明servlet在内存中值存在一个对象
+                            即servlet是单例的
+                         *多个用户同时访问时可能会产生线程安全问题
+                         解决方案：尽量不要在servlet中定义成员变量，即使定义了成员变量，也不要对其修改值。
+            2.提供服务：执行service方法，执行多次
+                    *每次访问Servlet时，Servlet方法都会被调用一次
+            3.被销毁：执行destroy方法，只执行一次
+                    *Servlet被销毁时执行。服务器关闭时，Servlet被销毁。
+                    ***只有服务器正常关闭时，才会执行destroy方法
+                    *destroy方法在Servlet被销毁之前执行，一般用于释放资源。就像遗言一样
+
+
+Servlet 3.0
+        *好处：
+            *支持注解配置。可以不需要web.xml了
+        *步骤：
+            1.创建javaEE项目，选择Servlet的版本3.0以上，可以不创建web.xml
+            2.定义一个类。实现Servlet接口
+            3.复写方法
+            4.在类上使用@WebServlet注解，进行配置
+                    @WebServlet("资源路径")
+
+## IDEA与tomcat的相关配置
+    1.IDEA会为每一个tomcat部署的项目单独建立一份配置文件
+        *查看控制台的log: Using CATALINA_BASE: Using CATALINA_BASE:   "C:\Users\lenovo\.IntelliJIdea2019.2\system\tomcat\_Day01_基础加强"
+    2.工作空间项目 和 tomcat部署的web项目
+        *tomcat真正访问的是"tomcat部署的web项目"，"tomcat部署的web"对应着"工作空间项目"的web目录下的所有资源
+        *WEB-INF内的文件不能被浏览器直接访问到
+        *断点调试：使用“小虫子”启动  debug启动
+
+         6.Servlet体系结构
+                Servlet--接口
+
+                GenericServlet--抽象类
+                        将Servlet接口中的其他方法做了空实现，
+                        只将service()方法作为抽象方法
+                        将来定义Servlet类时，可以继承GenericServlet实现service方法即可
+                        //其他方法可以直接复写
+
+                HttpServlet   --抽象类
+                        对http协议的一种封装，简化操作
+                    1.定义类继承HttpServlet
+                    2.复写doGet/doPost方法
+
+         7.Servlet相关配置
+               1. urlpartten:Servlet访问路径
+                    1.一个Servlet可以定义多个访问路径： @WebServlet({"demo1","demo2","demo3"})
+                    2.路径定义规则：
+                        1.  /xxx
+                        2.  /xxx/xxx: 多层路径，目录结构
+                        3.  *.do
+
+
+         ## HTTP:
+                *概念： Hyper Text Transfer Protocol 超文本传输协议
+                            * 传输协议：定义了，客户端和服务器端通信时，发送数据的格式
+                            * 特点：
+                                1.基于TCP/IP的高级协议
+                                2.默认端口号：80
+                                       http://www.itcast.cn
+                                       协议   域名
+                                3.一次请求对应一次响应
+                                4.无状态的：每次请求之间相互独立，不能交互数据
+
+                             *历史版本：
+                                1.0 ：每一次请求响应都会建立新的连接
+                                1.1 ：复用连接
+
+                *请求消息数据格式
+                    1.请求行
+                            请求方式 请求url 请求协议/版本
+                            GET/login.html HTTP/1.1
+                                请求方式：
+                                        *HTTP协议有7种请求方式，常用的有两种
+                                            *GET:
+                                                1.请求参数在请求行中
+                                                2.请求的url长度是有限制的
+                                                3.不太安全
+                                            *POST:
+                                                1.请求参数在请求体中
+                                                2.请求的url长度是有限制的
+                                                3.相对安全
+
+                    2.请求头：客户端浏览器告诉服务器一些信息
+                            请求头名称:请求头值
+                                常见的请求头：
+                                    1. User-Agent: 浏览器告诉服务器，我方问你使用的浏览器版本信息
+                                        *可以在服务器端获取该头的信息解决浏览器的兼容信息
+                                    2. Referer: http://localhost/lohin.html
+                                        *告诉服务器，我（当前请求）从哪里来
+                                            *作用：
+                                                1.防盗链
+                                                2.统计工作
+
+                    3.请求空行
+                            空行，就是用于分割POST请求的请求头和请求体的。
+                    4.请求体
+                            正文
+                            *封装POST请求消息的请求参数，所有GET没有请求体
+                 *字符串格式：
+                                  GET/login.html HTTP/1.1
+                                            username:ssss
+   *响应消息数据格式
+
+## Request:
+        1.request对象和response对象的原理
+            1.request和response对象是由服务器创建的。我们来使用它们
+            2.request对象是获取请求消息，response对象是来设置响应消息
+        2.request的继承体系结构
+            ServletRequest    --接口
+                    继承
+            HttpServletRequest --接口
+                    实现
+            org.apache.catalina.connector.RequestFacade 类(tomcat)
+
+        3.request:
+                1.获取请求消息数据
+                      1.获取请求行数据
+                            *格式    GET/study/demo.do?name=ntt? HTTP/1.1
+                            *方法
+                                    1.获取请求方式 ： GET
+                                        * String getMethod()
+                                    2.(*)获取虚拟目录: /study
+                                        *String getContextPath()
+                                    3.获取Servlet路径：/demo.do
+                                        *String getServletPath()
+                                    4.获取get方式请求参数：name=ntt
+                                        *String getQueryString()
+                                    5.(*)获取请求的URI:/study/demo.do
+                                        *String getRequestURI(): /study/demo.do
+                                        *StringBuffer getRequestURL(): http://localhost/study/demo.do
+
+                                        *URL:统一资源定位符：http://localhost:8080/study/RequestDemo  中华人民共和国
+                                        *URI：统一资源标识符：/study/RequestDemo  共和国
+                                    6.获取协议及版本： HTTP/1.1
+                                        *String getProtocol()
+                                    7.获取客户机的IP地址
+                                        *String getRemoteAddr()
+                      2.获取请求头数据
+                        *方法：
+                            *String getHeader(String name):通过请求头的名称获取请求头的值
+                            *Enumeration<String> getHeaderNames():获取所有的请求头名称
+
+                      3.获取请求体数据
+                         *请求体：只有POST请求方式，才有请求体，在请求体中封装了POST请求的请求参数
+                         *步骤：
+                            1.获取流对象
+                                * BufferedReader getReader() 获取字符输入流，只能操作字符数据
+                                * ServletInputStream getInputStream() 获取字节输入流，可以操作所有类型的数据                                    字符流
+                            2.再从流对象中拿数据
+
+                2.其他功能
+                      1.获取请求参数通用方式  不论get 还是 host 都可以使用下列方法
+                            1. String getParameter(String name):根据参数名称获取参数值  username=fff&password=www
+                            2. String getParameterValues (String name):根据参数名称获取参数值的数组  hobby=xx&&hobby=game
+                            3. Enumeration<String> getParameterNames():获取所有请求的参数名称
+                            4. Map<String,String[]> getParameterMap():获取所有参数的map集合
+                            *中文乱码问题：
+                                *get方式:Tomcat 8 已经将get方式的乱码问题解决了
+                                *post方式:会乱码
+                                    *解决
+                                        在获取参数前，设置request的编码
+                                                    request.setCharacterEncoding("utf-8")
+                      2.请求转发
+                            一种在服务器内部的资源跳转方式
+                            1.步骤；
+                                1.通过request对象获取请求转发对象: RequestDispatcher getRequestDispatcher(String path)
+                                2.使用该RequestDispatcher对象来进行转发:forward（ServletRequest request,ServletResponse response）
+                            2.特点：
+                                1.浏览器地址栏不发生变化
+                                2.只能转发到当前服务器内部资源中。
+                                3.转发是一次请求
+                      3.共享数据
+                            *域对象：一个有作用范围的对象，可以在范围内共享数据
+                            *request域：代表一次请求的范围，一般用于请求转发的多个资源中共享数据
+                            *方法
+                                1. void  setAttribute(String name,Object obj):存储数据
+                                2. Object getAttribute(String name):通过键获取值
+                                3. void removeAttribute(String name):通过键移除键值对
+                      4.获取ServletContext
+                                * ServletContent对象
+                                ServletContext代表一个web应用环境对象，即一个web环境。
+                                也就是说ServletContext对象内部封装了该web应用的信息。因此一个web应用只有一个ServletContext对象。
+
+                8.login.html中form表单的action路径的写法
+                        *  虚拟目录+Servlet的资源路径
+                9.BeanUtils工具类，简化数据封装
+                        *用于封装JavaBean的
+                        1.JavaBean：标准的Java类
+                          1.要求
+                                1.类必须被public修饰
+                                2.必须提供空参的构造器
+                                3.成员变量必须使用private修饰
+                                4.提供公共setter和getter方法
+                          2.功能：封装数据
+                        2.概念：
+                                成员变量
+                                属性:setter和getter方法截取后的产物
+                                       例如：getUsername()-->Username-->username
+                        3.方法：
+                            1.setProperty()
+                            2.getProperty()
+                            3.Property(Object obj,Map map): 将map集合的键值对信息，封装到对应的JavaBean对象中
+
+        HTTP协议：响应消息
+            1.请求消息：客户端发给服务器端的数据
+                *数据格式
+                    1.请求行
+                    2.请求头
+                    3.请求空行
+                    4.请求体
+            2.响应消息：服务器端发给客户端的数据
+                    1.响应行
+                        1.组成：协议/版本 响应状态码  状态码描述
+                        2.响应状态码：服务器告诉客户端浏览器本次请求和响应的状态
+                            1.状态码都是三位数字
+                            *分类：
+                                1.  1xx  服务器接收客户端消息，但没有完成，等待一段时间后发生1xx给客户端问有没有发生完
+                                2.  2xx  成功          代表：  200
+                                3.  3xx  重定向        代表：  302（重定向） 304（访问缓存）
+                                4.  4xx  客户端错误    代表：404 （请求路径没有对应的资源）
+                                                            405 （请求方式没有对应的doXxx方法）
+                                                                可能你表单用post发送  而servlet中的代码却写在get中。
+                                                                        就会报这个错误
+                                5.  5xx  服务器端错误   代表：500 服务器内部出现异常
+
+
+                    2.响应头：
+                            1. 格式： 头名称：值
+                            2. 常见的响应头：
+                                1.Content-Type:服务器告诉客户端本次响应体数据格式（text/html）以及编码格式
+                                2.Content-disposition:服务器告诉客户端以什么样的格式打开响应体数据
+                                    * 值：
+                                        * in-line:默认值，在当前页面内打开
+                                        * attachment:filename=xxx:以附件形式打开响应体。文件下载
+                    3.响应空行
+
+                    4.响应体：传输的数据
+                            发送传输的数据，如字符串数据和图片等
+
+##Response对象
+    *功能：设置响应消息
+        1.设置响应行
+            1.格式：HTTP/1.1 200 ok
+            2.设置状态码： setStatus(int sc)
+        2.设置响应头：setHeader(String name,String value)
+        3.设置响应体：
+            *使用步骤：
+                1.获取输出流
+                    *字符输出流 :  PrintWriter getWriter()
+                    *字节输出流 :  ServletOutputStream getOutputStream()
+                2.使用输出流，将数据输出到客户端浏览器
+案例：
+    1.完成重定向
+        *重定向：资源跳转的一种方式
+        *代码实现：
+          *    1.设置状态码为302
+                    resp.setStatus(302);
+               2.设置响应头location
+                    resp.setHeader("location","/study/responseDemo2");
+
+            动态获取虚拟目录
+             String contextPath=req.getContextPath();
+          * 简单的重定向
+            resp.sendRedirect("/study/responseDemo2");
+
+    redirect      *重定向的特点
+            1.地址栏发送变化
+            2.重定向可以访问其他服务器的资源
+            3.重定向是两次请求，不能使用request对象来共享数据
+    forward     *转发的特点
+            1.转发地址栏路径不变
+            2.转发只能访问当前服务器下的资源
+            3.转发是一次请求，可以使用request对象来共享数据
+          *路径写法
+            1.路径的分类
+                用JSP时推荐使用绝对路径，不推荐使用相对路径
+                   1. 相对路径 通过相对路径不可以确定唯一资源
+                       如： ./index.html
+                       * 不以/开头，以 . 开头
+                       * 规则： 找到访问的当前资源与目标资源的相对位置关系
+                          ./  代表当前目录
+                          ../ 代表后退一级目录
+                   2. 绝对路径 通过绝对路径可以确定唯一资源
+                        * 如： http://localhost:8080/study/responseDemo2    /study/responseDemo2
+                        * 以/开头的路径
+                      * 规则：判断定义的路径是给谁用的？判断请求从哪发出
+                        *给客户端浏览器使用：需要加虚拟目录（项目的访问路径）
+                            *建议虚拟目录路径动态获取： request.getContextPath()
+                            *<a>,<form>,重定向  都是给客户端用的，都要加虚拟目录
+                        *给服务器使用：不需要加虚拟目录
+                            *转发路径
+
+
+    2.服务器输出字符数据到浏览器
+            *步骤：
+                1.获取字符输出流
+                                 PrintWriter pw=resp.getWriter();
+                                  * 这个流可以不关闭，因为该流是response获取的，response消失后流会自动关闭
+                                  * 所有用write方法可以做到不刷新也能把数据写出缓冲区
+                2.输出数据
+                                 pw.write("<h1>hello response</h1>");
+                                 pw.write("你好");
+
+            *注意
+                *乱码问题：
+                    1.（获取的流的默认编码是ISO-8859-1）
+                    PrintWriter pw=resp.getWriter();
+                    2.设置该流的编码
+                     //获取流对象之前，设置流的默认编码：ISO-8859-1
+                            resp.setCharacterEncoding("utf-8");
+                    3.告诉浏览器响应体使用的编码
+                        *简单形式，设置编码，是在获取流之前设置
+                        *resp.setContentType("text/html;charset=utf-8");
+
+    3.服务器输出字节数据到浏览器
+        *步骤：
+            1.获取字节输出流
+                                   //设置编码
+                                    resp.setContentType("text/html;charset=utf-8");
+                                    //1.获取字节输出流
+                                    //字节流多用于输出图片等
+                                    ServletOutputStream sos=resp.getOutputStream();
+            2.输出数据
+                       //2.输出数据
+                        sos.write("hello哈哈哈哈哈".getBytes("utf-8"));
+
+    4.验证码
+            1.本质：图片
+            2.目的：防止恶意表单注册
+
+## ServletContext对象
+    1.概念：代表整个web应用，可以和程序的容器（服务器）来通信
+    2.获取：
+        1.通过request对象获取
+            request.getServletContext();
+        2.通过HttpServlet获取
+            this.getServletContext();
+    3.功能：
+        1.获取MIME类型：
+            *MIME类型：在互联网通信过程中定义的一种文件数据类型
+                * 格式：   大类型/小类型  text/html     image/jpeg
+
+               *获取: String getMimeType(String file)  //根据后缀名获取大类型
+        2.域对象：共享数据
+            1.setAttribute(String name,Object value)
+            2.getAttribute(String name)
+            3.removeAttribute(String name)
+
+            *ServletContext对象范围：所有用户所有请求的数据
+
+        3.获取文件的真实（服务器）路径
+            1.方法：getRealPath(String realPath)
+##案例
+    *文件下载需求
+        1.页面显示超链接
+        2.点击超链接后弹出下载提示框
+        3.完成图片文件下载
+
+    *分析
+        1.超链接指向的资源如果能被浏览器解析，则在浏览器中展示，如果不能解析，则弹出下载提示框。不满足需求
+        2.任何资源都必须弹出下载提示框
+        3.使用响应头设置资源的打开方式
+             * content-disposition:attachment;filename=xxx
+
+    *步骤
+        1.定义页面，编辑超链接href的属性，指向Servlet，传递资源名称filename
+        2.定义Servlet
+            1.获取文件名称
+            2.使用字节输入流加载文件进内存
+            3.指定response的响应头：content-disposition:attachment;filename=xxx
+            4.将数据写出到response输出流
+
+    *问题
+        *中文文件名问题
+            解决思路
+                1.获取客户端使用的浏览器版本信息
+                2.根据不同的版本信息，设置filename的编码方式不同
+##会话技术
+    1.会话：一次会话中包换多次请求和响应
+        * 一次会话：浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止
+    2.功能：在一次会话的范围内共享数据
+    3.方式：
+        1.客户端会话技术：Cookie
+        2.服务器端会话技术：Session
+
+## Cookie
+    1.概念：客户端会话技术，将数据保存到客户端
+    2.快速入门
+        *使用步骤
+            1.创建Cookie对象，绑定数据
+                * new Cookie(String name,String value);
+            2.发送Cookie对象
+                * response.addCookie(Cookie cookie)
+            3.获取Cookie，拿到数据
+                * Cookie[] request.getCookie()
+
+    3.实现原理
+        *基于响应头set-cookie和请求头cookie实现
+
+    4.cookie的细节
+        1.一次可不可以发送多个cookie？
+            *可以
+            *可以创建多个Cookie对象，使用response调用多次addCookie方法发送cookie即可
+        2.cookie在浏览器中保存多长时间?
+            1.默认情况下，当浏览器关闭后，Cookie数据被销毁
+            2.持久化存储：
+                * setMaxAge(int seconds)//默认是负数
+                    1.正数：将Cookie数据写到硬盘的文件中。持久化存储。Cookie存活时间
+                    2.负数：默认值
+                    3.0：删除Cookie信息
+        3.cookie能不存中文?
+                *在Tomcat 8之前  cookie不支持存储中文数据。特殊字符还是不支持，建议使用URL编码
+                        *需要将中文数据转码--一般采用URL编码(%E3)
+                *在Tomcat 8之后  cookie支持存储中文数据
+        4.cookie获取范围多大?
+           1 *假设在同一个tomcat服务器中，部署了多个web项目，那么这些项目 中的cookie能否共享？
+                *默认情况下cookie不能共享
+                *setPath(String path):设置cookie的获取范围。默认情况下，设置当前的虚拟目录
+                    *如果要共享，则可以将path设置为"/"
+           2 *不同的tomcat服务器间可以共享吗
+                *setDomain(String path):如果设置一级域名相同，那么多个服务器之间cookie可以共享
+                    *setDomain(".baidu.com"),那么tieba.baidu.com和news.baidu.com中cookie可以共享
+
+5. Cookie（又被称为小甜点或小甜饼）的特点和作用
+    1.cookie存储数据在客户端浏览器
+    2.浏览器对于单个cookie 的大小有限制（4KB） 以及 对同一域名下的总cookie数量也有限制（20个）
+
+    作用：
+        1.cookie一般用于存储少量的不太敏感的数据
+        2.在不登录的情况下，完成服务器对客户端的身份识别
+
+    6.案例：记住上一次访问时间
+        1.需求：
+            1.访问一个Servlet,如果是第一次访问则提示：您好，欢迎首次访问。
+            2.如果不是第一次访问，则提示：欢迎回来，您上次访问时间为：显示时间字符串
+        2.分析：
+            1.可以采用cookie来完成
+            2.在服务器中的Servlet判断是否有一个名为lastTime的cookie
+                1.有：不是第一次访问
+                    1.响应数据：欢迎回来，您上次访问时间为....
+                    2.写回cookie：lastTime=2019....
+                2.没有：是第一次访问
+                    1.响应数据：您好，欢迎您首次访问
+                    2.写回cookie：lastTime=2019....
+
+##JSP学习
+    1.概念
+        Java Server Pages: java服务器端页面
+            *可以理解为：一个特殊的页面，其中既可以定义html标签，也可以定义java代码
+                *可以简化书写
+    2.原理
+        JSP本质上就是Servlet
+    3.JSP的脚本：JSP定义java的方式
+            1. <% 代码 %> 定义的java代码，在Servlet方法中。service方法中可以定义什么，这里就能写什么
+            2. <%! 代码 %> 定义的java代码，在jsp转换后的java类的成员位置
+            3. <%= 代码 %> 定义的java代码，会输出到页面上，输出语句可以输出什么，这里就能输出什么
+    4.内置对象
+        *在jsp页面中不需要获取和创建，可以直接使用的对象
+        *jsp一共有9个内置对象
+        *今天学习3个
+            *request
+            *response
+            *out:字符输出流对象。可以将数据输出到页面上。和response.getWriter()类似
+                *response.getWriter()和out.write()的区别
+                    *在tomcat服务器真正给客户端做出响应之前，会先找response缓冲区数据，
+                    再找out缓冲区数据
+                    *response.getWriter()数据输出永远在out.write()之前
+
+##Session:
+    1.概念：服务器端会话技术，在一次会话的多次请求间共享数据，将数据保存在服务器端的对象中
+    2.快速入门：
+        1.获取HttpSession对象：
+          HttpSession session=request.getSession()
+        2.使用HttpSession对象
+            Object getAttribute(String name)
+            void setAttribute(String name,Object value)
+            void removeAttribute(String name)
+        3.原理
+            *Session实现是依赖于Cookie的
+        4.细节：
+            1.当客户端关闭后，服务器不关闭，两次获取的session是同一个吗？
+                *默认情况。不是
+                *如果需要相同，则可以创建Cookie，键为JSESSIONID,设置最大存活时间，让cookie持久化
+
+                      //1.获取session
+                            HttpSession session=req.getSession();
+                            //期望客户端 关闭后，session也能相同
+                            Cookie c=new Cookie("JSESSIONID",session.getId());
+                            c.setMaxAge(60*60);
+                            resp.addCookie(c);
+
+            2.当客户端不关闭，服务器关闭，两次获取的session是同一个吗？
+                *不是同一个,但是要确保数据不丢失
+                    *session的钝化：
+                        *在服务器正常关闭之前，将session对象系列化到硬盘上
+                    *session的活化：
+                        *在服务器启动后，将session文件转化为内存中的session对象即可
+            3.session的什么时候被销毁？
+                1.服务器关闭
+                2.session对象调用invalidate()
+                3.session默认失效时间 30分钟
+                    选择性配置修改
+                     <session-config>
+                        <session-timeout>30></session-timeout>
+                     </session-config>
+    5.session（主菜）的特点
+        1.session用于存储一次会话的多次请求的数据，存在服务器端
+        2.session可以存储任意类型，任意大小的数据
+
+       *session与cookie的区别：
+            1.session存储数据在服务器端，cookie在客户端
+            2.session没有数据大小限制。cookie有
+            3.session数据安全，cookie相对于不安全
+
+## MVC:开发模式
+    1.jsp演变历史
+        1.早期只有servlet，只能使用response输出标签数据，非常麻烦
+        2.后来又jsp，简化了Servlet的开发，如果过度使用jsp，在jsp中即写大了的java代码，又写html，造成难以维护，难于分工
+        3.再后来，java的web开发，借鉴了mvc开发模式，使得程序的设计更加合理性
+    2.MVC:
+        1.M:Model,模型。JavaBean
+            业务逻辑操作（调用模型，进行业务操作）
+            *完成具体的业务操作，如：查询数据库，封装对象
+        2.V:View,视图。JSP
+            展示数据
+        3.C:Controller,控制器。Servlet,
+            1.获取客户端的输入
+            2.调用模型
+            3.将数据交给视图进行展示
+
+        *优点：
+            1.耦合性低，方便维护，可以利于分工合作
+            2.重用性高
+        *缺点：
+            1.使得项目架构变的复杂，对开发人员要求高
+
+##EL表达式
+    1.概念：Expression Language 表达式语言
+    2.作用：替换和简化jsp页面中java代码的编写
+    3.语法：${表达式}
+    4.注意：
+        * jsp默认支持el表达式的。
+            如果要忽略el表达式
+                1.设置jsp中page指令中：isELIgnored="true" 忽略当前jsp页面中所有的el表达式
+                2.\${表达式}：忽略当前这个el表达式
+    5.使用
+        1.运算：
+            *运算符
+                1.算术运算符：+ - * /（div） %(mod)
+                2.比较运算符： > < >= <= == !=
+                3.逻辑运算符：&&(and)  ||(or) !(not)
+                4.空运算符：empty
+                        *功能：
+                        *  ${empty list} 判断字符串，集合，数组对象是否为null并且长度是否为0
+                        *  ${not empty list} 判断字符串，集合，数组对象是否不为null并且长度>0
+        2.获取值
+            1. el表达式只能从域对象中获取值
+            2.语法：
+                1.${域名称.键名}:从指定域中获取指定键的值
+                    *域名称：
+                        1.pageScope     -->pageContext
+                        2.requestScope  -->request
+                        3.sessionScope  -->session
+                        4.applicationScope  -->application(ServletContext)
+
+                    *举例：在request域中存储name=张三
+                    *获取：${requestScope.name}
+                2.${键名}:表示依次从最小的域中查找是否有该键对应的值，直到找到为止
+                    ${name}
+
+                3.获取对象，list集合，Map集合的值
+                    1.对象：${域名称.键名.属性名}
+                        *本质上会去调用对象的getter方法
+                    2.List集合：
+                        ${域名称.键名[索引]}
+                    3.Map集合：
+                        ${域名称.键名.key名称}
+                        ${域名称.键名["key名称"]}
+
+                4.隐式对象:
+                    el表达式中有11个隐式对象
+                    pageContext:
+                        1.获取jsp其他8个内置对象
+                            ${pageContext.request.contextPath}:动态获取虚拟目录
+
+
+## JSTL:
+    1.概念：JavaServer Pages Tag Library  JSP标准标签库
+        *是由Apache组织提供的开源的免费的jsp标签  <标签>
+
+    2.作用：用于简化和替换jsp页面上的java代码
+    3.使用步骤：
+        1.导入jstl相关的jar包
+        2.引入标签库：taglib指令：
+                <%@ taglib %>
+        3.使用标签
+    4.常用的JSTL标签
+        1.if   (相当于java代码的if语句)
+                    c:if标签
+                        1.属性：
+                            * test必须属性，接收boolean表达式
+                                *如果表达式为true，则显示if标签体内容
+                                 如果为false，则不显示标签体内容
+                        注意：<c:if> 标签没有else情况
+                                想要else情况，则可以再定义一个<c:if>语句
+
+        2.choose  (相当于java代码的switch语句)
+                        1.域中存储数字
+                        2.使用choose标签取出数字,相当于switch声明
+                        3.使用when标签做数字判断，相当于case
+                        4.otherwise标签做其他情况的声明，相当于default
+
+
+        3.foreach   (相当于java代码的for循环)
+                        foreach相当于java代码的for循环
+                            1.完成重复操作
+                                for(int i=0;i<10;i++){
+
+                                    }
+                                *属性：
+                                    begin:开始值
+                                    end:结束值
+                                    war:临时变量
+                                    step:步长
+                                    varStatus:循环状态对象
+                                        index:容器中元素的索引从0开始，在普通for循环中用则展示i真实的值
+                                        count:循环次数，从1开始
+                            2.遍历容器
+                                list<User> list;
+                                for(User user:list){
+
+                                    }
+
+                                    属性:
+                                        items:容器对象
+                                        var:容器中元素的临时变量
+                                    varStatus:循环状态对象
+                                        index:容器中元素的索引从0开始，在普通for循环中用则展示i真实的值
+                                        count:循环次数，从1开始
+
+            5.练习：
+                需求：在request域中有一个存有User对象的List集合.需要使用jstl+el将list集合数据展示到jsp页面的表格table中
+
+
+
+##三层架构：软件设计架构
+    1.界面层（表示层）web：用户看得见的界面。用户可以通过界面上的组件和服务器进行交互
+        cn.itcast.项目名.web
+        SpringMVC框架  接受用户参数，封装数据，调用业务逻辑层完成处理。转发jsp页面完成显示
+    2.业务逻辑层servlet：处理业务逻辑的。
+        cn.itcast.项目名.service
+        Spring框架 组合DAO层中的简单方法，形成复杂的功能(业务逻辑操作)
+    3.数据访问层dao：操作数据存储文件
+        cn.itcast.项目名.dao
+        MyBatis框架 定义了对应数据库最基本的CRUD操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

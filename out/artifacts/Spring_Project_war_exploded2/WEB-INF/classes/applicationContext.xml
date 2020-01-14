@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--    &lt;!&ndash;    &lt;!&ndash;写在xml文件里的东西都是反射，必须用全路径&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;     id表示获取到对象的标识&ndash;&gt;-->
+<!--&lt;!&ndash;     class表示创建哪个类的对象&ndash;&gt;-->
+<!--&lt;!&ndash;      &ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;    创建无参构造对象&ndash;&gt;-->
+<!--&lt;!&ndash;    <bean id="people" class="com.yige.pojo.People"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash;创建带参构造&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <bean id="people" class="com.yige.pojo.People">&ndash;&gt;-->
+<!--&lt;!&ndash;        &lt;!&ndash;ref引用另一个bean   value 基本数据类型或String等&ndash;&gt;-->
+<!--&lt;!&ndash;            index 索引位置的属性        &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <constructor-arg index="0" type="int" value="123"></constructor-arg>&ndash;&gt;-->
+<!--&lt;!&ndash;        <constructor-arg index="1" type="java.lang.String" value="张三"></constructor-arg>&ndash;&gt;-->
+<!--&lt;!&ndash;    </bean>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;        <bean id="factory" class="com.yige.pojo.PeopleFactory"></bean>&ndash;&gt;-->
+<!--&lt;!&ndash;        实例工厂  指定由哪一个对象的哪一个方法生产这个peo1对象&ndash;&gt;-->
+<!--&lt;!&ndash;        <bean id="people2" factory-bean="factory" factory-method="newInstance"></bean>&ndash;&gt;-->
+<!--&lt;!&ndash;        &ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash;静态工厂 只需要知道用哪个类和哪个方法即可&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <bean id="people3" class="com.yige.pojo.PeopleFactory" factory-method="newInstance"></bean>&ndash;&gt;-->
+
+
+<!--    <bean id="peo" class="com.yige.pojo.People">-->
+<!--        &lt;!&ndash;本质上走的是set方法 以下两种写法等效&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="id" value="222"></property>&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="name" value="张三"></property>&ndash;&gt;-->
+
+<!--        <property name="id">-->
+<!--            <value>456</value>-->
+<!--        </property>-->
+<!--        <property name="name">-->
+<!--            <value>张三</value>-->
+<!--        </property>-->
+
+<!--        &lt;!&ndash;给集合赋值&ndash;&gt;-->
+<!--        <property name="set">-->
+<!--            <set>-->
+<!--                <value>1</value>-->
+<!--                <value>2</value>-->
+<!--                <value>3</value>-->
+<!--                <value>4</value>-->
+<!--            </set>-->
+<!--        </property>-->
+<!--        <property name="list">-->
+<!--            <list>-->
+<!--                <value>1</value>-->
+<!--                <value>2</value>-->
+<!--                <value>3</value>-->
+<!--                <value>4</value>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--        &lt;!&ndash;-->
+<!--        如果list只有一个值，则可以这样写-->
+<!--        <property name="list" value="1"></property>-->
+
+<!--        这样算一个值 （一个String类型的字符串）-->
+<!--        <property name="list" value="1,2,3"></property>-->
+<!--        &ndash;&gt;-->
+<!--        <property name="strs">-->
+<!--            <array>-->
+<!--                <value>1</value>-->
+<!--                <value>3</value>-->
+<!--                <value>5</value>-->
+<!--                <value>7</value>-->
+<!--            </array>-->
+<!--        </property>-->
+
+<!--        &lt;!&ndash;-->
+<!--      如果数组只有一个值，则可以这样写-->
+<!--      <property name="array" value="1"></property>-->
+<!--      &ndash;&gt;-->
+<!--       <property name="map">-->
+<!--           <map>-->
+<!--               &lt;!&ndash;一个键值对&ndash;&gt;-->
+<!--               <entry key="a" value="b">-->
+<!--               </entry>-->
+<!--               <entry key="c" value="d">-->
+<!--               </entry>-->
+<!--           </map>-->
+<!--       </property>-->
+
+<!--        <property name="pro">-->
+<!--            <props>-->
+<!--                &lt;!&ndash;属性文件&ndash;&gt;-->
+<!--                <prop key="key">value</prop>-->
+<!--                <prop key="key1">value1</prop>-->
+<!--            </props>-->
+<!--        </property>-->
+<!--        &lt;!&ndash;把另一个类的对象注入&ndash;&gt;-->
+<!--        <property name="desk" ref="desk"></property>-->
+<!--    </bean>-->
+<!--    <bean id="desk" class="com.yige.pojo.demo.Desk">-->
+<!--        <property name="id" value="1"></property>-->
+<!--        <property name="price" value="12"></property>-->
+<!--    </bean>-->
+
+    <!--Spring对JDBC封装-->
+    <!--获取数据源-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/数据库名"></property>
+        <property name="username" value="倪涛涛"></property>
+        <property name="password" value=".15252205596xin"></property>
+    </bean>
+    <!--spring帮助创建SqlSessionFactory-->
+    <bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--扫描器扫描接口，并创建接口对象-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.yige.pojo"></property>
+        <property name="sqlSessionFactory" ref="factory"></property>
+    </bean>
+    <!--创建service-->
+    <bean id="usersService" class="com.yige.serviceimpl.UserServiceImpl">
+        <property name="usersMapper" ref="UsersMapper"></property>
+    </bean>
+<!--    &lt;!&ndash;当tomcat加载web.xml时，把Spring配置文件信息存放在application对象中&ndash;&gt;-->
+<!--    &lt;!&ndash;WebApplicationContext容器，是ApplicationContext子接口&ndash;&gt;-->
+
+<!--    <context-param>-->
+<!--        <param-name>contextConfigLocation</param-name>-->
+<!--        <param-value>classpath:applicationContext.xml</param-value>-->
+<!--    </context-param>-->
+
+<!--    &lt;!&ndash;加载Spring配置文件&ndash;&gt;-->
+<!--    <listener>-->
+<!--        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
+</beans>

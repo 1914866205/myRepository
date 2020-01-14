@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格标签</title>
+</head>
+<body>
+<!--
+border是边框
+bgcolor背景颜色
+colspan 合并列
+rowspan 合并行
+cellpadding定义内容和单元格的内容
+cellspacing定义单元格之间的距离。如果指定为0，则单元格的线会合为一条
+align 对齐方式
+caption 表格标题
+thead  表示表格的头部分
+tbody  表示表格的体部分
+tfoot  表示表格的脚部分 无论定义在哪里，永远展示在最下面
+-->
+  <table width="200px" border="1" cellpadding="0" bgcolor="#8a2be2"cellspacing="0">
+    <caption>学生信息表</caption>
+ <thead>
+    <tr>
+      <th>编号</th>
+      <td>姓名</td>
+      <th>成绩</th>
+    </tr>
+ </thead>
+ <tbody>
+    <tr>
+      <td>01</td>
+      <td>A</td>
+      <td>99</td>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>A</td>
+      <td>99</td>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>A</td>
+      <td>99</td>
+    </tr>
+
+    <tr>
+      <td>01</td>
+      <td>A</td>
+      <td>99</td>
+    </tr>
+ </tbody>
+<tfoot>
+<tr>
+  <td>01</td>
+  <td>A</td>
+  <td>9</td>
+</tr>
+</tfoot>
+  </table>
+
+
+
+<table width="200px" border="1" cellpadding="0" bgcolor="#8a2be2"cellspacing="0">
+  <caption>学生信息表</caption>
+
+  <tr>
+    <th rowspan="2">编号</th>
+    <th>姓名</th>
+    <th>成绩</th>
+  </tr>
+
+  <tr>
+    <td>01</td>
+    <td>A</td>
+
+  </tr>
+  <tr>
+    <td>01</td>
+    <td colspan="2">A</td>
+
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>A</td>
+  </tr>
+
+</table>
+</body>
+</html>

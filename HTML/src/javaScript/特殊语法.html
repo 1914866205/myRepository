@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>特殊语法</title>
+  <script>
+    //1.语句以;结尾，如果一行只有一条语句，可以省略(不建议)
+    var a=3;
+    alert(a)
+
+    /*
+    * 变量的定使用var关键字 也可以不使用
+    *     用则定义的是局部变量
+    *     不用则定义的是全局变量
+    * */
+    var b=4;
+    c=5;
+    function fub() {
+        var d=4;
+         k=1;
+    }
+    //alert(d);//报错  d是局部变量
+    alert(k);//全局变量，出了范围依旧可以使用
+  </script>
+</head>
+<body>
+
+</body>
+</html>

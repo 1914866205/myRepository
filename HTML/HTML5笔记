@@ -1,0 +1,186 @@
+table  表格
+tr  行
+td  单元格
+th  表头单元格
+
+
+td rowspan=2   单元格占两行   td是列
+div  每一个div占满一整行。块级标签
+span 文本信息在一行展示，行内标签 内联标签
+
+语义化标签：
+1   <header>
+2   <footer>
+
+border是边框
+bgcolor背景颜色
+colspan 合并列
+rowspan 合并行
+cellpadding定义内容和单元格的内容
+cellspacing定义单元格之间的距离。如果指定为0，则单元格的线会合为一条
+align 对齐方式
+caption 表格标题
+thead  表示表格的头部分
+tbody  表示表格的体部分
+tfoot  表示表格的脚部分 无论定义在哪里，永远展示在最下面
+ol    有序列表    有样式选择type  有start属性
+il     无序列表    有样式选择
+    链接标签
+        a：定义一个超链接
+            属性：
+                * href:指定访问资源的URL(统一资源定位符)
+                * target:指定打开资源的方式
+                      *  _self:默认值。在当前页面打开新的网页
+                      *  _blank:在一个新的页面打开新的网页
+
+form 用于定义表单，可以定义一个范围，范围代表采用用户数据的范围
+      *属性
+        * action    指定提交数据的URL
+        * method    指定提交的方式
+              *  分类：一共有其中，两种比较常用
+  ！！！                  get
+                              1.请求参数会在地址栏中显示
+                              2.请求参数大小是有限制的
+                              3.不太安全，因为账号密码会显示在网址中
+  ！！！                  post
+                              1.请求参数不会在地址栏中显示，会封装在请求体中        * 表单项中的数据要想被提交，必须要指定其name属性
+                              2.请求参数的大小没有限制
+                              3.较为安全
+
+表单项标签
+            *input 可以通过type属性值，改变元素展示的样式
+                  *type属性
+                      * text: 文本输入框
+                            placeholder:指定输入框的提示信息，当输入框的内容发生改变则自动清空
+                      * password:密码标签
+                      * color : 取色器
+                      * hidden :隐藏域
+                      * email:邮箱
+                      * number:数字
+                      * date : 日期
+                      * datetime-local 年月日
+                      * file:文件框
+                      * radio： 单选框
+                            *注意
+                              1.若想实现单选，则它们的name属性值必须相同
+                              2.一般会给每一个单选框提供一个value
+                              3. checked属性，可以指定默认值
+                      * checkbox:复选框
+                              1.若想实现单选，则它们的name属性值必须相同
+                              2.一般会给每一个复选框提供一个value
+                              3. checked属性，可以指定默认值
+              *label：指定输入项的文字描述信息
+                  *注意：
+                    * label的for属性一般会和input的id属性值对应。如果对应了，则点击label区域，会让input的输入框获取光标
+                    <label for="username">用户名</label>:<input type="text" name="username" placeholder="请输入用户名" id="username>"
+            *select 下拉列表
+                    *子元素 option
+                       省份:<select name="province">
+                            <option value="1">请选择</option>
+                            <option value="2">北京</option>
+                            <option value="3">上海</option>
+                            <option value="4">南京</option>
+                        </select>
+
+            *textarea 文本域
+                       <!-- 5行20列   行数不够会自动扩容-->
+                          自我描述：<textarea cols="20" rows="5" name="des"></textarea>
+                        cols  指定列数，每一行有多少个字符
+                        rows  默认多少行
+
+            按钮
+                 * submit：提交按钮
+                 * button: 普通按钮
+                 * 可以图片按钮   <input type="image" src=" ">
+
+
+## CSS: 页面美化和布局控制
+      Cascading Style Sheets 层叠样式表
+      层叠：多个样式可以作用在同一个html的元素上，同时生效
+      1.功能强大
+      2.将内容展示和样式控制分离
+            *降低耦合度，解耦
+            *让分工协作更容易
+            *提高开发效率
+
+  当前标签生效           内联样式
+                  在标签内使用style属性指定css代码
+                  如<div style="color: blue">hello</div>
+  当前页面生效           内部样式
+             在head标签内，定义style标签，style标签的标签体内容就是css代码-->
+
+  所有引入css的html文件均生效
+                      外部样式
+             可以写为
+                <style>
+                  @import "css/a.css"
+                </style>
+                    1.定义资源文件
+                    2.在head标签内，定义link标签，
+                       引入外部资源文件
+  css语法：
+    格式
+        选择器{
+        属性名1:属性值1；
+        属性名2:属性值2；
+        }
+选择器：筛选具有相似特征的元素
+  注意：
+      每一对属性需要使用 ; 隔开，
+       最后一对属性可以不加分号。
+
+   5.选择器  筛选具有相似特征的元素
+        分类
+              1.基础选择器
+                                1.id选择器  建议在一个html页面中id值唯一,不唯一也可以被解析
+                                    语法：  #id属性值{}
+                                2.元素选择器 选择具有相同标签名称的元素
+                                    语法： 标签名称{}
+                                    注意： id选择器的优先级高于元素选择器
+                                3.类选择器  选择具有相同的class属性值的元素
+                                 语法： .class{}
+                                  注意： 类选择器的优先级高于元素选择器
+              2.扩展选择器
+                                1.选择所要元素：
+                                   语法：   *{}
+                                2.并集选择器：
+                                   语法： 选择器1，选择器2{}
+                                3.子选择器：筛选选择器1下的选择器2
+                                   语法   选择器1 选择器2{}
+                                4.父选择器：筛选选择器2上的父选择器1
+                                   语法   选择器1>选择器2
+                                5.属性选择器：选择元素名称，属性名=属性值的元素
+                                   语法   元素名称[属性名="属性值"]{}
+                                6.伪类选择器：选择一些元素具有的状态
+                                    语法：  元素：状态{}
+                                    如    <a>
+                                          状态
+                                             link  初始化的状态
+                                              visited 被访问过的状态
+                                              active 正在访问状态
+                                              hover 鼠标悬浮状态
+
+   6.属性
+      1 字体  文本
+            font-size  字体大小
+            color    文本颜色
+            text-align  对齐方式
+            line-height
+
+      2 背景
+          background:url("")
+      3 边框
+          border :   设置边框,符合属性
+      4 尺寸
+            height 高度
+            weight 宽度
+
+      5 盒子模型
+          margin  外边距
+          padding 内边距
+                默认情况下内边距会影响整个盒子的大小
+                box-sizing:border-box; 设置盒子 属性，让width和height就是最终的盒子的大小
+          float: 浮动
+              left  左浮动
+              right 右浮动
+

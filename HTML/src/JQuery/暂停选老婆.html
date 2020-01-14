@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>暂停选老婆</title>
+</head><script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+<script language="JavaScript" type="text/javascript">
+  /*
+  * 分析
+  *     1.给开始按钮绑定单击事件
+  *         1.1 定义循环定时器
+  *         1.2 切换小组框得到src属性
+  *           * 定义数组，存放图片资源路径
+  *           * 生成随机数。数组索引
+  *     2.给结束按钮绑定单击事件
+  *         1.1 停止定时器
+  *         1.2 给大相框设置src属性
+  * */
+  var imgs=[
+    "i1.jpg",
+    "i2.jpg",
+    "i3.jpg",
+    "i4.jpg",
+    "i5.jpg",
+    "i6.jpg",
+    "i7.jpg",
+    "i8.jpg",
+    "i9.jpg",
+    "i10.jpg",
+    "i11.jpg"
+  ];
+  var startId;//开始定时器的id
+  var index;//随机角标
+
+  $(function () {
+    //处理按钮是否可以使用的效果
+    $("#startID").prop("disabled",false);
+    $("#stopID").prop("disabled",true);
+    //1.给开始按钮绑定单击事件
+    $("#startID").click(function () {
+    //1.1 定义循环定时器  20毫秒执行一次
+   startId= setInterval(function () {
+
+     //处理按钮是否可以使用的效果
+     $("#startID").prop("disabled",true);
+     $("#stopID").prop("disabled",false);
+      //1.2生成随机角标 1-11
+      index=Math.floor(Math.random());//0.000-0.999
+      //1.3设置小相框的src属性
+      $("#imgID").prop("src",imgs[index]);
+    },20)
+    });
+    //2.给结束按钮绑定单击事件
+    $("#stopID").click(function () {
+
+      //处理按钮是否可以使用的效果
+      $("#startID").prop("disabled",false);
+      $("#stopID").prop("disabled",true);
+      //1.1停止定时器
+      clearInterval(startId);
+      //给大相框设置src属性
+      $("#img2ID").prop("src",imgs[index]).hide();
+      //显示1秒后
+      $("#img2ID").show(1000);
+    });
+  });
+
+</script>
+<body>
+<!--小相框-->
+<div style="border-style: dotted;width: 160px;height: 100px">
+  <img id="imgID" src="i1.jpg" style="height: 100px;width: 160px">
+</div>
+
+<!--大相框-->
+<div style="border-style: dotted;width: 800px;height: 500px">
+  <img id="img2ID" src="i1.jpg" style="height: 500px;width: 800px">
+</div>
+<!--开始按钮-->
+<input id="startID" type="button" value="点击开始" style="width: 152px;height: 152px;font-size: 22px">
+<!--结束按钮-->
+<input id="stopID" type="button" value="点击结束" style="width: 152px;height: 152px;font-size: 22px">
+</body>
+</html>

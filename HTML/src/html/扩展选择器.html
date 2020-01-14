@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    div p{
+      color: red;
+    }<!-- 只会影响div标签控制下的p标签-->
+
+    div > p{
+      border:1px solid;
+              }<!--控制p标签的父元素div 加边框-->
+
+    <!-- 选择input标签的text类型的标签-->
+    input[type='text'] {
+          border:50px solid;
+                   }
+         <!--默认状态-->
+    a:link{
+      color: #ff9ee2;
+    }
+    a:hover{
+      color: #1b6d85;
+    }
+    a:active{
+      color: #50a8fa;
+    }
+    a:visited{
+      color: #b3d4fc;
+    }
+  </style>
+</head>
+<body>
+<div><p>传智播客</p></div>
+<p>黑马程序员</p>
+<div>aaa</div>
+
+<input type="text">
+<input type="password">
+<br>
+<a href="#">传智播客</a>
+</body>
+
+</html>
