@@ -15,7 +15,6 @@ public class TestDay20200117 {
             List<File> fileList=new ArrayList<File>();
             for (File file: fileArr){
                 if (!file.isDirectory()){
-
                 // 获取文件类型
                 String type= Files.probeContentType(Paths.get(file.getPath()));
                 if ("image/jpeg".equals(type)||"image/jpg".equals(type)) {
