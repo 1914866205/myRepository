@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NeedInfo {
-    public void getList(String result) {
+    public ArrayList<User> getList(String result) {
         //匹配最小数据域的正则
         String regRange = "class=\"full-name\">倪涛涛</li>([\\s\\S]*){23700}";//名字
 //        String s=r.substring(0,23700);
@@ -56,10 +56,8 @@ public class NeedInfo {
             }
         });
 
-
-
-
-        System.out.println(users);
+//        System.out.println(users);
+        return users;
     }
 
     public String getInfoByReg(String info, String reg, int start, int end) {
@@ -130,5 +128,4 @@ public class NeedInfo {
         }
         return  i;
     }
-
 }

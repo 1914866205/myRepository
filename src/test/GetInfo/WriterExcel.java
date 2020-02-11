@@ -42,7 +42,7 @@ public class WriterExcel {
         //如果sheet是空的，就属性全部加入
         //如果不是空的，就加入score属性
         //至于什么时候换sheet，有时间控制
-        if (sheet==null){
+        if (sheet.getLastRowNum() <= 0){
             //如果是新的sheet,在表中添加表头第0行
             HSSFRow row=sheet.createRow(0);
             //创建单元格，设置表头
@@ -67,6 +67,7 @@ public class WriterExcel {
                 row1.createCell(2+Calendar.getInstance().get(Calendar.DATE)).setCellValue(user.getScore());
             }
         }else {
+            System.exit(0);
             //如果sheet是继续添加
             //在表格写入数据
             for (int i = 0; i <users.size() ; i++) {
@@ -89,7 +90,7 @@ public class WriterExcel {
 
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DATE);
-        //         此处修改为+1则是获取后一天
+        //此处修改为+1则是获取后一天
         calendar.set(Calendar.DATE,day+1);
         if (day==1){
         return new main().write=false;
