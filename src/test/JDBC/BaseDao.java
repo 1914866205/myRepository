@@ -18,7 +18,7 @@ public class BaseDao {
      * 执行数据库查询操作
      */
 
-    public static ResultSet executeQuery(String sql, Object[]param){
+    public static ResultSet executeQuery(String sql, Objects ... param){
         try {
             pstmt=conn.prepareStatement(sql);
             if (param!=null){

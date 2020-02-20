@@ -8,7 +8,7 @@ public class main {
     public static boolean init=true;
     public static boolean write=true;
     public static int day=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-//    public static int day2=3;
+    public static int day2=3;
     public static void main(String[] args) throws Exception {
 //        GetInfoByUrl getInfoByUrl = new GetInfoByUrl();
 //        String result=getInfoByUrl.getInfo();
@@ -21,5 +21,6 @@ public class main {
         MyTimerTask myTimerTask=new MyTimerTask();
         //在2秒后执行第一次，之后每天执行一次
         timer.schedule(myTimerTask,2000L,1000*60*60*24L);
+//        timer.schedule(myTimerTask,2000L,1000L);
     }
 }

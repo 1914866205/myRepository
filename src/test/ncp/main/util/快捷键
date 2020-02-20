@@ -1,0 +1,18 @@
+ctrl+Shift+回车，自动补全符号并切换到下一行
+ctrl+Shift+insert，开启/关闭左边项目栏
+fn+alt+insert 创建类
+ctrl+alt+L  格式化
+alt+1  切换到左边的项目上
+"helloworld".sout +enter 快速打印
+ctrl+shift+f10   运行
+
+
+ctrl+tab 切来切去
+ctrl+w 选你所想
+Template/Positfix + tab 代码生成
+shift+shift 无处可藏
+ctrl+Shift+回车，自动完成
+alt+insert 创建类
+ctrl+shift+space自动补全
+alt+enter 自动修复
+ctrl+shift+alt+T 重构一切

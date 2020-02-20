@@ -31,7 +31,7 @@ public class FileUtil {
             fis = url.openStream();
             bis = new BufferedInputStream(fis);
 
-            fos = new FileOutputStream(new File(StringUtils.splitPicName(urlPath)));
+//            fos = new FileOutputStream(new File(StringUtils.splitPicName(urlPath)));
             bos = new BufferedOutputStream(fos);
 
             while ((bis.read(temp)) != -1) {

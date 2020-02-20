@@ -114,6 +114,7 @@ public class WriterExcel {
                 //创建单元格设置值  测试
 //                row1.createCell((new main().day2 + Calendar.getInstance().get(Calendar.DATE))).setCellValue(user.getScore());
             }
+            //测试
 //            new main().day2++;
         }
 
