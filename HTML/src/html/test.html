@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  /*<!--*/
+  /*在屏幕中间居中显示一个div，600*400大小*/
+  /*div中居中间显示一个p，300*200大小*/
+  /* p中间居中显示一个span，150*100大小*/
+  /*span中显示一段文字，文字在span也居中*/
+  /* 每个部分可以用个背景色，方便区分*/
+  /*所有居中，指的都是水平和垂直都居中*/
+  /*-->*/
+  /*文字居中 text-align:center*/
+  /*文字的标签是span，它是行内元素,
+  text-align：center
+只对行内元素和行内块级元素有用
+而div，是块级元素，所以没用
+  */
+  /*display:block——块级元素：自己独占一行，如div，p，ul，li，可以设置大小*/
+  /*display:inline-block——行内块级元素：可以多个元素并排在一行，如img，button，a，可以设置大小*/
+  /*display:inline——行内元素：可以多个元素并排在一行，如span、i，不可以设置大小*/
+html{
+  height: 100%;
+}
+
+body{
+  height: 100%;
+  text-align: center;
+  background-color: #4d7c93;
+  position: relative;
+}
+  #div1{
+    position: absolute;
+    top:25%;
+    transform: translate(-50%);
+    display: inline-block;
+    background-color: #b3d4fc;
+    width: 600px;
+    height: 400px;
+    line-height: 100px;
+  }
+
+  #p1{
+    position: absolute;
+    top:25%;
+    transform: translate(-50%);
+    width: 300px;
+    display: inline-block;
+    height: 200px;
+    background-color: #2b542c;
+  }
+  #span1{
+    position: absolute;
+    top:25%;
+    transform: translate(-50%);
+    display: inline-block;
+    width: 150px;
+    height: 100px;
+    background-color: #2b669a;
+  }
+</style>
+<body>
+
+<div id="div1">
+  <p id="p1">
+    <span id="span1">
+      文字在span也居中
+    </span>
+
+  </p>
+</div>
+</body>
+</html>
