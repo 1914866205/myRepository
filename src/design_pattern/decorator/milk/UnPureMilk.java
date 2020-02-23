@@ -1,8 +1,8 @@
 package design_pattern.decorator.milk;
 
-public class PureMilk implements Milk {
+public class UnPureMilk implements Milk {
     @Override
     public void buy() {
-        System.out.println("纯牛奶 3元");
+        System.out.println("不纯牛奶 0.3元");
     }
 }

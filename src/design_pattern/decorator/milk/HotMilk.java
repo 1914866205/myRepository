@@ -1,12 +1,16 @@
 package design_pattern.decorator.milk;
 
-public class IceMilk extends MilkDecorator {
-    public IceMilk(Milk milk) {
+public class HotMilk extends MilkDecorator {
+    public HotMilk(Milk milk) {
         super(milk);
     }
 
+    public void addHot(Milk milk){
+        System.out.println(milk+"加热");
+    }
     @Override
     public void buy() {
-        System.out.println(milk+"加冰");
+        addHot(milk);
+        milk.buy();
     }
 }
